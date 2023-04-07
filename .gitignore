@@ -38,3 +38,9 @@ out
 
 # Jetbrains IDEs
 .idea
+
+# learning
+.cache
+.xmake
+compile_commands.json
+vc140.pdb

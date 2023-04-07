@@ -1,21 +1,30 @@
-/**
- * @file plugin.cpp
- * @brief The main file of the plugin
- */
+#include <cmath>
+#include <functional>
+#include <memory>
+#include <string>
+#include <thread>
 
+#include <llapi/mc/Player.hpp>
+#include <llapi/mc/ItemStack.hpp>
+
+#include <llapi/ScheduleAPI.h>
+#include <llapi/EventAPI.h>
 #include <llapi/LoggerAPI.h>
 
-#include "version.h"
+Logger extern logger;
 
-// We recommend using the global logger.
-extern Logger logger;
+auto PluginInit() -> void {
+    using namespace std::literals;
 
-/**
- * @brief The entrypoint of the plugin. DO NOT remove or rename this function.
- *        
- */
-void PluginInit()
-{
-    // Your code here
-    logger.info("Hello, world!");
+    Event::PlayerEatEvent::subscribe([](Event::PlayerEatEvent const & e){
+        e.mPlayer->sendText("plugin other eat 1 said you are ready to eating " + e.mFoodItem->getName());
+
+        return false;
+    });
+
+    Event::PlayerEatEvent::subscribe([](Event::PlayerEatEvent const & e){
+        e.mPlayer->sendText("plugin other eat 2 said you are ready to eating " + e.mFoodItem->getName());
+
+        return true;
+    });
 }
